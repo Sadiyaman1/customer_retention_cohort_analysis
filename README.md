@@ -43,7 +43,7 @@ The data flows through an automated **ELT** process (Extract, Load, Transform) a
 | Directory / File | Description |
 | :--- | :--- |
 | **`config/`** | Configuration files (e.g., Fivetran setup). |
-| **`dashboard & report/`** | Dashboard exports and project reports. |
+| **`dashboard_&_report/`** | Dashboard exports and project reports. |
 | **`data/source/`** | Raw input data (`ecom_orders.csv`). |
 | **`notebooks/`** | All project notebooks for data processing. |
 | ├── `data_ingestion/` | BigQuery setup and ingestion notebook. |
@@ -73,7 +73,7 @@ This project integrates several modern data engineering and analytics tools:
 
 ## Dashboard
 
-![Dashboard Screenshot](dashboard & report/Dashboard_Screenshot.pdf)
+![Dashboard Screenshot](dashboard_&_report/Dashboard_Screenshot.pdf)
 
 **Dashboard Link:**  
 🔗 https://dbc-b854569c-8de6.cloud.databricks.com/dashboardsv3/01f0cae796b712dc8428349afbb05e1e/published?o=4166173051620611
