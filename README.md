@@ -1,33 +1,36 @@
-#  E-Commerce Customer Cohort Analysis (ELT: BigQuery, Fivetran & Databricks)
+# E-Commerce Customer Cohort Analysis (ELT: BigQuery, Fivetran & Databricks)
 
-## Projektübersicht
+## Project Overview
 
-Dieses Repository dokumentiert die End-to-End-Pipeline und die analytische Verarbeitung für eine **detaillierte Kunden-Kohortenanalyse** (`Cohort Analysis`) im E-Commerce-Bereich.
+This repository documents the end-to-end data pipeline and analytical workflow for a **detailed customer cohort analysis** in the e-commerce domain.
 
-Das Hauptziel ist es, die **Kundenbindung** (`Retention`) und das **Wiederholungskaufverhalten** (`Repeat Purchase Rate`) unserer Kunden zu messen und darzustellen. Dazu werden Kunden nach ihrem ersten Kaufmonat (der Kohorte) segmentiert.
+The main goal is to measure **customer retention** and **repeat purchase behavior**. Customers are segmented based on the month of their first purchase (the cohort).
 
-Die gesamte Metrikberechnung erfolgt durch Data Transformation in Databricks, wobei die finale Metrik-Tabelle (`final_db_table`) zur direkten Verwendung in Dashboards dient.
+All metric calculations are performed using data transformations in Databricks, and the final metric table (`final_db_table`) is optimized for direct use in dashboards.
 
 ---
 
-## Data-Pipeline und Architektur (ELT-Workflow)
+## Data Pipeline & Architecture (ELT Workflow)
+![Fivetran Sync Konfiguration Screenshot](config/fivetran_config_screenshot.png)
 
-Die Daten fließen in einem automatisierten **ELT**-Prozess (Extract, Load, Transform) durch folgende Komponenten:
+The data flows through an automated **ELT** process (Extract, Load, Transform) across the following components:
 
-### 1. Extract & Source: Google BigQuery (mit GCS Staging)
+### 1. Extract & Source: Google BigQuery (with GCS Staging)
 
-* **Datenaufnahme (Ingestion):** Die rohen Transaktionsdaten (`ecom_orders.csv`) werden zunächst mittels Python (Google Cloud Storage Client) in den **Google Cloud Storage (GCS)** hochgeladen.
-* **Data Warehouse Setup:** Anschließend wird ein BigQuery-Dataset (`hybrid-sentry-479215-n9.cohort_analysis`) erstellt und die CSV-Daten mittels des **`LOAD DATA`**-Befehls in die BigQuery-Zieltabelle (`ecom_orders`) geladen. BigQuery dient als primäre, zuverlässige Datenquelle.
+* **Data Ingestion:** Raw transactional data (`ecom_orders.csv`) is first uploaded to **Google Cloud Storage (GCS)** using a Python script (Google Cloud Storage Client).
+* **Data Warehouse Setup:** A BigQuery dataset (`hybrid-sentry-479215-n9.cohort_analysis`) is created, and the CSV data is loaded into the BigQuery table (`ecom_orders`) using the **`LOAD DATA`** command. BigQuery serves as the primary, reliable source system.
 
-### 2. Load: Fivetran (Datenreplikation)
-* **Rolle:** Fivetran wird als EL-Tool (Extract & Load) eingesetzt, um die Rohdaten **automatisch** aus BigQuery (`bigquery_db` Connector) zu extrahieren.
-* **Destination:** Die Daten werden in das **Databricks Unity Catalog/Warehouse** geladen.
-* **Konfiguration:** Die Tabelle `ecom_orders` wird repliziert. Dabei wird der **Soft Delete Mode** verwendet, um historische Daten zu verwalten, ohne Zeilen physisch aus der Zieltabelle zu löschen.
+### 2. Load: Fivetran (Data Replication)
 
-### 3.  Transform & Analytics: Databricks (Spark SQL)
-* **Identifikation der Kohorte:** Bestimmung des **ersten Kaufmonats** (`cohort_month`) für jeden Kunden (`customer_id`) als Basis für die Gruppierung.
-* **Retention-Analyse (Zeitbasis):** Berechnung der **Kundenbindungs-Counts** (`retained_1m_count`, `retained_2m_count`, etc.) basierend auf der Zeit zwischen erstem und zweitem Kauf.
-* **Repeat-Analyse (Order-Basis):** Zählung der Kunden, die **mindestens 2, 3 oder 4 Käufe** über die gesamte Zeit getätigt haben (`repeat_count_2plus`, etc.).
-* **Umsatz- und Bestellbeitrag:** Aggregation des **Gesamtumsatzes** (`cohort_sales`) und der **Gesamtbestellungen** (`cohort_orders`) pro Kohorte.
-* **KPI-Normalisierung:** Berechnung der prozentualen Anteile an der Gesamtbasis (`cohort_size_total_customers_ratio`, etc.).
-* **Erstellung der Finalen Tabelle:** Zusammenführung aller Kennzahlen in die finale Dashboard-Tabelle (`final_db_table`) zur Verwendung in BI-Tools.
+* **Role:** Fivetran acts as the EL layer, automatically extracting the raw data from BigQuery (`bigquery_db` connector).
+* **Destination:** Data is loaded into the **Databricks Unity Catalog/Warehouse**.
+* **Configuration:** The table `ecom_orders` is replicated using **Soft Delete Mode**, which maintains historical records without physically deleting rows in the target table.
+
+### 3. Transform & Analytics: Databricks (Spark SQL)
+
+* **Cohort Identification:** Determining the **first purchase month** (`cohort_month`) for each customer (`customer_id`) as the basis for cohort grouping.
+* **Retention Analysis (Time-Based):** Computing **retention counts** (`retained_1m_count`, `retained_2m_count`, etc.) based on the time between a customer’s first and second purchase.
+* **Repeat Analysis (Order-Based):** Counting customers who made **at least 2, 3, or 4 purchases** over time (`repeat_count_2plus`, etc.).
+* **Revenue & Order Contribution:** Aggregating **total cohort revenue** (`cohort_sales`) and **total cohort orders** (`cohort_orders`).
+* **KPI Normalization:** Calculating the proportional contributions relative to the entire customer base (`cohort_size_total_customers_ratio`, etc.).
+* **Creation of the Final Table:** Merging all key metrics into a final dashboard-ready table (`final_db_table`) for use in BI tools.
