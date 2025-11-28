@@ -75,7 +75,7 @@ This project integrates several modern data engineering and analytics tools:
 ## Dashboard
 
 ![Fivetran Sync Konfiguration Screenshot](dashboard_&_report/dashboard_screenshot.png)
-![View pdf for better resolution!](dashboard_&_report/Dashboard_View.pdf)
+![View pdf for better Resolution!](dashboard_&_report/Dashboard_View.pdf)
 
 ---
 
