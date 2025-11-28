@@ -1,0 +1,14 @@
+# Fivetran Konfiguration
+
+## Sync Details
+
+| Quelltabelle | Sync Mode |
+| :--- | :--- |
+| `ecom_orders` | `CDC (Soft Delete)` |
+
+---
+
+## Databricks Schema Mapping
+
+* **Quellschema (BigQuery):** `cohort_analysis`
+* **Zielschema (Databricks):** `workspace.bigquery_db_cohort_analysis`
