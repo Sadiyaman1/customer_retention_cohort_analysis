@@ -35,6 +35,23 @@ The data flows through an automated **ELT** process (Extract, Load, Transform) a
 * **KPI Normalization:** Calculating the proportional contributions relative to the entire customer base (`cohort_size_total_customers_ratio`, etc.).
 * **Creation of the Final Table:** Merging all key metrics into a final dashboard-ready table (`final_db_table`) for use in BI tools.
 
+
+---
+
+## Repository Structure
+
+| Directory / File | Description |
+| :--- | :--- |
+| **`config/`** | Contains configuration files and external tool documentation (`fivetran_configuration.md`, sync details). |
+| **`dashboard & report/`** | Stores the final output reports and rendered dashboard screenshots (e.g., PDFs from Databricks SQL Analytics). |
+| **`data/source/`** | Repository for the raw, initial data file (`ecom_orders.csv`) before ingestion into BigQuery. |
+| **`notebooks/`** | Main directory for all executable data processing notebooks. |
+| ├── `data_ingestion/` | Notebooks for **Extract & Load** into BigQuery (e.g., `Cohort_Analysis_Data_Setup_(bigquery).ipynb`). |
+| └── `databricks_transformation/` | Notebooks for the analytical **Transformation (T)** logic in Databricks (e.g., `Cohort_Analysis_Transformation_(Databricks).ipynb`). |
+| **`.gitignore`** | Specifies files and directories (like environment files or checkpoints) that Git should ignore. |
+| **`LICENSE`** | The licensing terms for the project (e.g., MIT License). |
+| **`README.md`** | This main documentation file. |
+
 ---
 
 ## Tools & Technologies Used
@@ -49,6 +66,13 @@ This project integrates several modern data engineering and analytics tools:
 | Lakehouse Platform | **Databricks (Unity Catalog, SQL Warehouse)** | Transformation layer, cohort computations, metric engineering |
 | Notebook Environment | **Databricks Notebooks (Python + SQL)** | Step-by-step transformations and logic explanation |
 | Dashboarding | **Databricks Dashboards v3** | Visualization of retention and repeat purchase KPIs |
+
+
+---
+
+## Dashboard
+
+![Dashboard Screenshot](config/fivetran_config_screenshot.png)
 
 **Dashboard Link:**  
 🔗 https://dbc-b854569c-8de6.cloud.databricks.com/dashboardsv3/01f0cae796b712dc8428349afbb05e1e/published?o=4166173051620611
