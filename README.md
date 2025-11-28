@@ -24,4 +24,10 @@ Die Daten fließen in einem automatisierten **ELT**-Prozess (Extract, Load, Tran
 * **Destination:** Die Daten werden in das **Databricks Unity Catalog/Warehouse** geladen.
 * **Konfiguration:** Die Tabelle `ecom_orders` wird repliziert. Dabei wird der **Soft Delete Mode** verwendet, um historische Daten zu verwalten, ohne Zeilen physisch aus der Zieltabelle zu löschen.
 
-### 3.  Transform & Analytics: Databricks (Spark SQL
+### 3.  Transform & Analytics: Databricks (Spark SQL)
+* **Identifikation der Kohorte:** Bestimmung des **ersten Kaufmonats** (`cohort_month`) für jeden Kunden (`customer_id`) als Basis für die Gruppierung.
+* **Retention-Analyse (Zeitbasis):** Berechnung der **Kundenbindungs-Counts** (`retained_1m_count`, `retained_2m_count`, etc.) basierend auf der Zeit zwischen erstem und zweitem Kauf.
+* **Repeat-Analyse (Order-Basis):** Zählung der Kunden, die **mindestens 2, 3 oder 4 Käufe** über die gesamte Zeit getätigt haben (`repeat_count_2plus`, etc.).
+* **Umsatz- und Bestellbeitrag:** Aggregation des **Gesamtumsatzes** (`cohort_sales`) und der **Gesamtbestellungen** (`cohort_orders`) pro Kohorte.
+* **KPI-Normalisierung:** Berechnung der prozentualen Anteile an der Gesamtbasis (`cohort_size_total_customers_ratio`, etc.).
+* **Erstellung der Finalen Tabelle:** Zusammenführung aller Kennzahlen in die finale Dashboard-Tabelle (`final_db_table`) zur Verwendung in BI-Tools.
