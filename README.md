@@ -73,7 +73,7 @@ This project integrates several modern data engineering and analytics tools:
 
 ## Dashboard
 
-![Dashboard Screenshot](config/fivetran_config_screenshot.png)
+![Dashboard Screenshot](dashboard & report/Dashboard_Screenshot.pdf)
 
 **Dashboard Link:**  
 🔗 https://dbc-b854569c-8de6.cloud.databricks.com/dashboardsv3/01f0cae796b712dc8428349afbb05e1e/published?o=4166173051620611
