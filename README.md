@@ -44,7 +44,7 @@ The data flows through an automated **ELT** process (Extract, Load, Transform) a
 | Directory / File | Description |
 | :--- | :--- |
 | **`config/`** | Configuration files (e.g., Fivetran setup). |
-| **`dashboard_&_report/`** | Dashboard exports and project reports. |
+| **`dashboard_&_report/`** | Dashboard export and project report. |
 | **`data/source/`** | Raw input data (`ecom_orders.csv`). |
 | **`notebooks/`** | All project notebooks for data processing. |
 | ├── `data_ingestion/` | BigQuery setup and ingestion notebook. |
